@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Models;
 
+use App\Models\Log;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
@@ -45,5 +46,17 @@ class TaskTest extends TestCase
 
         $this->assertEquals(true, $task->isExpired());
         $this->assertEquals(true, $task->is_expired);
+    }
+
+    /**
+     * @test
+     */
+    public function a_task_has_many_logs()
+    {
+        $task = Task::factory()
+            ->hasLogs(2)
+            ->create();
+
+        $this->assertInstanceOf(Log::class, $task->logs->first());
     }
 }

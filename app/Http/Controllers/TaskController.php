@@ -59,6 +59,8 @@ class TaskController extends Controller
     {
         $this->authorize('view', $task);
 
+        $task->load('logs.user');
+
         return view('tasks.show', compact('task'));
     }
 }

@@ -69,4 +69,14 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the logs for the task.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
+    }
 }

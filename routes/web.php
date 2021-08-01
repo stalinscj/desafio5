@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use App\Http\Controllers\TaskController;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('tasks', TaskController::class)->except('edit', 'update', 'destroy');
+
+    Route::resource('tasks.logs', TaskLogController::class)->only(['store']);
 });
 
 Route::view('/', 'welcome');

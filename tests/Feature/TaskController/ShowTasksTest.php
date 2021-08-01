@@ -18,9 +18,10 @@ class ShowTasksTest extends TestCase
         $user = $this->signIn();
 
         $task = Task::factory()
+            ->hasLogs(2)
             ->create(['worker_id' => $user->id]);
 
-        $this->get(route('tasks.show', $task))
+        $response = $this->get(route('tasks.show', $task))
             ->assertSuccessful()
             ->assertViewIs('tasks.show')
             ->assertSeeText($task->author->name)
@@ -29,6 +30,12 @@ class ShowTasksTest extends TestCase
             ->assertSeeText($task->worker->email)
             ->assertSeeText($task->deadline->toDateString())
             ->assertSeeText($task->description);
+
+        foreach ($task->logs as $log) {
+            $response->assertSeeText($log->user->name)
+                ->assertSeeText($log->created_at)
+                ->assertSeeText($log->comment);
+        }
     }
 
     /**
