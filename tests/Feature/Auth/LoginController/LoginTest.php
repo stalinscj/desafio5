@@ -28,7 +28,7 @@ class LoginTest extends TestCase
             ->assertViewIs('auth.login');
 
         $this->post(route('login'), $attributes)
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('tasks.index'));
 
         $this->assertAuthenticated()
             ->assertAuthenticatedAs($user);

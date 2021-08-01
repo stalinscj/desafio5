@@ -48,7 +48,7 @@ class RegistrationTest extends TestCase
             ->assertViewIs('auth.register');
 
         $this->register($this->validAttributes)
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('users', Arr::except($this->validAttributes, ['password', 'password_confirmation']));
 

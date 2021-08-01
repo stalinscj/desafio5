@@ -19,10 +19,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('tasks', TaskController::class)->only('create', 'store', 'index');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
