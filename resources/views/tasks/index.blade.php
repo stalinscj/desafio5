@@ -26,21 +26,22 @@
                                     <td class="align-middle">{{ $task->deadline->toDateString() }}</td>
                                     <td class="align-middle">
                                         @if ($task->worker->is(auth()->user()))
-                                            <a href="{{ route('tasks.show', $task) }}" class="btn btn-sm btn-success" title="See Details">
-                                                S
+                                            <a href="{{ route('tasks.show', $task) }}" title="See Details"
+                                                class="btn btn-sm btn-success">
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                         @endif
 
                                         @if ($task->author->is(auth()->user()))
                                             <a href="{{ route('tasks.edit', $task) }}" title="Edit"
                                                 class="btn btn-sm btn-info my-1">
-                                                E
+                                                <i class="fas fa-edit"></i>
                                             </a>
                                             
                                             <a href="{{ route('tasks.show', $task) }}" title="Delete"
                                                 class="btn btn-sm btn-danger"
                                                 onclick="event.preventDefault(); document.getElementById('delete-task-{{ $task->id }}').submit();">
-                                                X
+                                                <i class="fas fa-trash"></i>
                                             </a>
 
                                             <form id="delete-task-{{ $task->id }}" action="{{ route('tasks.show', $task) }}" 
