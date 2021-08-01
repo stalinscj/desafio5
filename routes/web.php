@@ -16,7 +16,7 @@ use App\Http\Controllers\TaskController;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('tasks', TaskController::class)->only('create', 'store');
+    Route::resource('tasks', TaskController::class)->only('create', 'store', 'index');
 });
 
 Route::get('/', function () {

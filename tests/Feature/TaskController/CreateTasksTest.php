@@ -25,7 +25,7 @@ class CreateTasksTest extends TestCase
         $attributes = Task::factory()->raw(['author_id' => $user->id]);
 
         $this->post(route('tasks.store'), $attributes)
-            ->assertRedirect(route('tasks.create'));
+            ->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', $attributes);
     }

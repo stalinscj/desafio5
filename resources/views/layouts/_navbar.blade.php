@@ -16,6 +16,14 @@
                         Create Task
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('tasks.index') }}"
+                        class="nav-link {{ request()->routeIs('tasks.index') ? 'active' : '' }}">
+                        Task List
+                    </a>
+                </li>
+
             </ul>
 
             <!-- Right Side Of Navbar -->

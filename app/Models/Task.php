@@ -29,4 +29,44 @@ class Task extends Model
     protected $casts = [
         'deadline' => 'date',
     ];
+
+    /**
+     * Get the task's expired status.
+     *
+     * @return string
+     */
+    public function getIsExpiredAttribute()
+    {
+        return $this->isExpired();
+    }
+
+    /**
+     * Check if the task is expired
+     *
+     * @return boolean
+     */
+    public function isExpired()
+    {
+        return $this->deadline->isBefore(today());
+    }
+
+    /**
+     * Get the user who create the task.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the user assigned the task.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function worker()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -9,6 +9,18 @@ use App\Http\Requests\TaskRequest;
 class TaskController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $tasks = Task::with('worker')->latest()->paginate();
+
+        return view('tasks.index', compact('tasks'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -34,6 +46,6 @@ class TaskController extends Controller
 
         toast()->success('Task Created!');
 
-        return redirect()->route('tasks.create');
+        return redirect()->route('tasks.index');
     }
 }
