@@ -32,7 +32,8 @@
                                         @endif
 
                                         @if ($task->author->is(auth()->user()))
-                                            <a href="#" class="btn btn-sm btn-info my-1" title="Edit">
+                                            <a href="{{ route('tasks.edit', $task) }}" title="Edit"
+                                                class="btn btn-sm btn-info my-1">
                                                 E
                                             </a>
                                             

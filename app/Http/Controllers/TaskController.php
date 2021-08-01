@@ -65,6 +65,39 @@ class TaskController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Task $task)
+    {
+        $this->authorize('update', $task);
+        
+        $users = User::all();
+
+        return view('tasks.edit', compact('task', 'users'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\TaskRequest $request
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function update(TaskRequest $request, Task $task)
+    {
+        $this->authorize('update', $task);
+
+        $task->update($request->validated());
+
+        toast()->success('Task Updated!');
+
+        return redirect()->route('tasks.index');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Task  $task
