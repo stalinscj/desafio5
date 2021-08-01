@@ -17,7 +17,7 @@ use App\Http\Controllers\TaskLogController;
 */
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::resource('tasks', TaskController::class)->except('edit', 'update', 'destroy');
+    Route::resource('tasks', TaskController::class)->except('edit', 'update');
 
     Route::resource('tasks.logs', TaskLogController::class)->only(['store']);
 });

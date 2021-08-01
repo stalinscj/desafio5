@@ -36,9 +36,17 @@
                                                 E
                                             </a>
                                             
-                                            <a href="#" class="btn btn-sm btn-danger" title="Delete">
+                                            <a href="{{ route('tasks.show', $task) }}" title="Delete"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="event.preventDefault(); document.getElementById('delete-task-{{ $task->id }}').submit();">
                                                 X
                                             </a>
+
+                                            <form id="delete-task-{{ $task->id }}" action="{{ route('tasks.show', $task) }}" 
+                                                method="POST" class="d-none">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         @endif
                                     </td>
                                 </tr>

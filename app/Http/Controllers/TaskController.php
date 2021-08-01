@@ -63,4 +63,21 @@ class TaskController extends Controller
 
         return view('tasks.show', compact('task'));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Task $task)
+    {
+        $this->authorize('delete', $task);
+
+        $task->delete();
+
+        toast()->error('Task Deleted!');
+
+        return redirect()->route('tasks.index');
+    }
 }
