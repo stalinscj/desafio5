@@ -26,7 +26,7 @@
                                     <td class="align-middle">{{ $task->deadline->toDateString() }}</td>
                                     <td class="align-middle">
                                         @if ($task->worker->is(auth()->user()))
-                                            <a href="#" class="btn btn-sm btn-success" title="See Details">
+                                            <a href="{{ route('tasks.show', $task) }}" class="btn btn-sm btn-success" title="See Details">
                                                 S
                                             </a>
                                         @endif

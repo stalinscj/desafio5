@@ -48,4 +48,17 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Task  $task
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Task $task)
+    {
+        $this->authorize('view', $task);
+
+        return view('tasks.show', compact('task'));
+    }
 }
