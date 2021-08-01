@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use App\Models\Task;
+use App\Events\LogCreatedEvent;
 use App\Http\Requests\TaskLogRequest;
 
 class TaskLogController extends Controller
@@ -19,11 +20,13 @@ class TaskLogController extends Controller
     {
         $this->authorize('create', [Log::class, $task]);
 
-        $task->logs()
+        $log = $task->logs()
             ->create([
                 'user_id' => auth()->id(),
                 'comment' => $request->comment
             ]);
+
+        LogCreatedEvent::dispatch($log);
 
         toast()->success('Log Created!');
 

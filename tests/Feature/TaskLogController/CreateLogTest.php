@@ -6,6 +6,8 @@ use App\Models\Log;
 use Tests\TestCase;
 use App\Models\Task;
 use Illuminate\Support\Str;
+use App\Events\LogCreatedEvent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateLogTest extends TestCase
@@ -17,6 +19,8 @@ class CreateLogTest extends TestCase
      */
     public function an_authenticated_user_can_create_logs_for_the_tasks_assigned_to_him()
     {
+        Event::fake([LogCreatedEvent::class]);
+        
         $user = $this->signIn();
 
         $task = Task::factory()->create(['worker_id' => $user->id]);
@@ -30,6 +34,31 @@ class CreateLogTest extends TestCase
             ->assertRedirect(route('tasks.show', $task));
 
         $this->assertDatabaseHas('logs', $attributes);
+    }
+
+    /**
+     * @test
+     */
+    function an_event_is_fired_when_a_log_is_created()
+    {
+        Event::fake([LogCreatedEvent::class]);
+
+        $user = $this->signIn();
+
+        $task = Task::factory()->create(['worker_id' => $user->id]);
+
+        $attributes = Log::factory()->raw();
+
+        $this->post(route('tasks.logs.store', $task), $attributes);
+
+        Event::assertDispatched(LogCreatedEvent::class, function ($logCredtedEvent) {
+            
+            $this->assertInstanceOf(Log::class, $logCredtedEvent->log);
+            
+            $this->assertTrue(Log::first()->is($logCredtedEvent->log));
+
+            return true;
+        });
     }
 
     /**
